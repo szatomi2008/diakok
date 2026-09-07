@@ -8,6 +8,9 @@ import javafx.scene.control.ListView;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -34,6 +37,8 @@ public class MainController implements Initializable {
         kecskemetButton.setOnAction(_ -> showKecskemet());
         yearButton.setOnAction(_ -> show1996());
         classButton.setOnAction(_ -> show10A());
+
+        saveButton.setOnAction(_ -> saveStudents());
     }
 
     private void showAll() {
@@ -93,5 +98,29 @@ public class MainController implements Initializable {
         alert.setTitle("Hiba");
         alert.setHeaderText(e.getMessage());
         alert.showAndWait();
+    }
+
+    private void saveStudents() {
+
+        String filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss")) + ".txt";
+        File file = new File(filename);
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            if (resultList.getItems().size() < 1) {
+                showError(new Exception("Nem található diák!"));
+                return;
+            }
+
+            for (int i = 0; i < resultList.getItems().size(); i++) {
+                writer.write("%s%n".formatted(resultList.getItems().get(i).toString()));
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            showError(e);
+        }
     }
 }
