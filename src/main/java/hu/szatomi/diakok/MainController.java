@@ -6,10 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -18,7 +15,7 @@ public class MainController implements Initializable {
 
     public Button allButton;
     public Button sandorButton;
-    public Button musketeerButton;
+    public Button kecskemetButton;
     public Button yearButton;
     public Button classButton;
     public ListView<Student> resultList;
@@ -32,7 +29,36 @@ public class MainController implements Initializable {
         File file = new File("diakok.csv");
         loadStudents(file);
 
+        allButton.setOnAction(_ -> showAll());
+        sandorButton.setOnAction(_ -> showSandor());
+        kecskemetButton.setOnAction(_ -> showKecskemet());
+        yearButton.setOnAction(_ -> show1996());
+        classButton.setOnAction(_ -> show10A());
+    }
+
+    private void showAll() {
+        resultList.getItems().clear();
         resultList.getItems().addAll(students);
+    }
+
+    private void showSandor() {
+        resultList.getItems().clear();
+        resultList.getItems().addAll(students.stream().filter(s -> s.firstName().equals("Sándor")).toList());
+    }
+
+    private void showKecskemet() {
+        resultList.getItems().clear();
+        resultList.getItems().addAll(students.stream().filter(s -> s.city().equals("Kecskemét")).toList());
+    }
+
+    private void show1996() {
+        resultList.getItems().clear();
+        resultList.getItems().addAll(students.stream().filter(s -> s.birthDate().contains("1996")).toList());
+    }
+
+    private void show10A() {
+        resultList.getItems().clear();
+        resultList.getItems().addAll(students.stream().filter(s -> s.studentClass().equals("10/A")).toList());
     }
 
     private void loadStudents(File file) {
@@ -68,5 +94,4 @@ public class MainController implements Initializable {
         alert.setHeaderText(e.getMessage());
         alert.showAndWait();
     }
-
 }
