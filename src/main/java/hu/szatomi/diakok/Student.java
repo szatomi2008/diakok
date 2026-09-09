@@ -1,13 +1,14 @@
 package hu.szatomi.diakok;
 
-public record Student(Integer id,
-                      String lastName,
-                      String firstName,
-                      String sex,
-                      String studentClass,
-                      String birthDate,
-                      String city,
-                      Integer height
+public record Student(
+        Integer id,
+        String lastName,
+        String firstName,
+        String sex,
+        String studentClass,
+        String birthDate,
+        String city,
+        Integer height
 ) {
 
     @Override

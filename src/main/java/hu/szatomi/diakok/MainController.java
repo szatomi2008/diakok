@@ -122,5 +122,10 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             showError(e);
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText("Sikeres mentés!");
+        alert.showAndWait();
     }
 }
